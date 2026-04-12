@@ -137,7 +137,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <span className={`font-semibold text-sm ${tx.type === "income" ? "text-income" : "text-expense"}`}>
-                    {tx.type === "income" ? "+" : "-"}${tx.amount}
+                    {tx.type === "income" ? "+" : "-"}₹{tx.amount}
                   </span>
                 </div>
               );
