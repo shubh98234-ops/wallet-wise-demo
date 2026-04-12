@@ -31,9 +31,9 @@ const Dashboard = () => {
   const budgetColor = budgetPercentage >= 100 ? "bg-destructive" : budgetPercentage >= 80 ? "bg-warning" : "bg-primary";
 
   const statCards = [
-    { title: "Balance", value: balance, icon: Wallet, gradient: "gradient-balance", prefix: "$" },
-    { title: "Income", value: totalIncome, icon: ArrowUpRight, gradient: "gradient-income", prefix: "+$" },
-    { title: "Expenses", value: totalExpenses, icon: ArrowDownRight, gradient: "gradient-expense", prefix: "-$" },
+    { title: "Balance", value: balance, icon: Wallet, gradient: "gradient-balance", prefix: "₹" },
+    { title: "Income", value: totalIncome, icon: ArrowUpRight, gradient: "gradient-income", prefix: "+₹" },
+    { title: "Expenses", value: totalExpenses, icon: ArrowDownRight, gradient: "gradient-expense", prefix: "-₹" },
   ];
 
   return (
@@ -67,7 +67,7 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">${currentMonthExpenses.toLocaleString()} of ${monthlyBudget.toLocaleString()}</span>
+            <span className="text-muted-foreground">₹{currentMonthExpenses.toLocaleString()} of ₹{monthlyBudget.toLocaleString()}</span>
             <span className={`font-medium ${budgetPercentage >= 100 ? "text-destructive" : budgetPercentage >= 80 ? "text-warning" : "text-primary"}`}>
               {Math.round(budgetPercentage)}%
             </span>
@@ -90,7 +90,7 @@ const Dashboard = () => {
                   <Pie data={pieData} cx="50%" cy="50%" innerRadius={55} outerRadius={90} dataKey="value" paddingAngle={3} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
                     {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                   </Pie>
-                  <Tooltip formatter={(val: number) => `$${val}`} />
+                  <Tooltip formatter={(val: number) => `₹${val}`} />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
