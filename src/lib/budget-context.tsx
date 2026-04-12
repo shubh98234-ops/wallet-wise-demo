@@ -62,7 +62,7 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const addTransaction = useCallback((t: Omit<Transaction, "id">) => {
     setTransactions((prev) => [{ ...t, id: crypto.randomUUID() }, ...prev]);
-    toast.success(`${t.type === "income" ? "Income" : "Expense"} added!`);
+    toast.success(`${t.type === "income" ? "Pocket money" : "Expense"} added!`);
   }, []);
 
   const deleteTransaction = useCallback((id: string) => {

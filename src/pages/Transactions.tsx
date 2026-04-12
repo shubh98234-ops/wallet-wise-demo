@@ -26,7 +26,7 @@ const Transactions = () => {
           <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All</SelectItem>
-            <SelectItem value="income">Income</SelectItem>
+            <SelectItem value="income">Pocket Money</SelectItem>
             <SelectItem value="expense">Expense</SelectItem>
           </SelectContent>
         </Select>

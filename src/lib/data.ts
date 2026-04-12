@@ -23,14 +23,15 @@ export const defaultCategories: Category[] = [
   { id: "6", name: "Bills", icon: "💡", color: "hsl(45, 90%, 50%)" },
   { id: "7", name: "Transport", icon: "🚌", color: "hsl(170, 60%, 45%)" },
   { id: "8", name: "Health", icon: "💊", color: "hsl(0, 72%, 55%)" },
-  { id: "9", name: "Salary", icon: "💰", color: "hsl(152, 60%, 40%)" },
+  { id: "9", name: "Pocket Money", icon: "🤑", color: "hsl(152, 60%, 40%)" },
   { id: "10", name: "Freelance", icon: "💻", color: "hsl(220, 70%, 50%)" },
   { id: "11", name: "Allowance", icon: "🎁", color: "hsl(300, 60%, 50%)" },
+  { id: "12", name: "Part-time Job", icon: "💼", color: "hsl(40, 70%, 50%)" },
 ];
 
 export const dummyTransactions: Transaction[] = [
-  { id: "1", type: "income", amount: 1500, category: "Salary", description: "Part-time job", date: "2026-04-01" },
-  { id: "2", type: "income", amount: 500, category: "Allowance", description: "Monthly allowance", date: "2026-04-01" },
+  { id: "1", type: "income", amount: 1500, category: "Pocket Money", description: "Monthly pocket money", date: "2026-04-01" },
+  { id: "2", type: "income", amount: 500, category: "Allowance", description: "Weekly allowance", date: "2026-04-01" },
   { id: "3", type: "expense", amount: 45, category: "Food", description: "Groceries", date: "2026-04-02" },
   { id: "4", type: "expense", amount: 120, category: "Education", description: "Online course", date: "2026-04-03" },
   { id: "5", type: "expense", amount: 30, category: "Transport", description: "Bus pass", date: "2026-04-04" },
@@ -42,7 +43,7 @@ export const dummyTransactions: Transaction[] = [
   { id: "11", type: "expense", amount: 40, category: "Health", description: "Pharmacy", date: "2026-04-10" },
   { id: "12", type: "expense", amount: 200, category: "Travel", description: "Weekend trip", date: "2026-04-11" },
   { id: "13", type: "expense", amount: 35, category: "Food", description: "Coffee & snacks", date: "2026-04-12" },
-  { id: "14", type: "income", amount: 1500, category: "Salary", description: "Part-time job", date: "2026-03-01" },
+  { id: "14", type: "income", amount: 1500, category: "Pocket Money", description: "Monthly pocket money", date: "2026-03-01" },
   { id: "15", type: "income", amount: 500, category: "Allowance", description: "Monthly allowance", date: "2026-03-01" },
   { id: "16", type: "expense", amount: 320, category: "Food", description: "Monthly groceries", date: "2026-03-05" },
   { id: "17", type: "expense", amount: 90, category: "Entertainment", description: "Concert tickets", date: "2026-03-10" },

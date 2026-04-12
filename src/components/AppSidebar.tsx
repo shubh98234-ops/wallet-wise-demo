@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Add Income", url: "/add-income", icon: PlusCircle },
+  { title: "Add Pocket Money", url: "/add-income", icon: PlusCircle },
   { title: "Add Expense", url: "/add-expense", icon: MinusCircle },
   { title: "Transactions", url: "/transactions", icon: List },
   { title: "Analytics", url: "/analytics", icon: PieChart },

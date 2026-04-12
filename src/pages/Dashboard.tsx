@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const statCards = [
     { title: "Balance", value: balance, icon: Wallet, gradient: "gradient-balance", prefix: "₹" },
-    { title: "Income", value: totalIncome, icon: ArrowUpRight, gradient: "gradient-income", prefix: "+₹" },
+    { title: "Pocket Money", value: totalIncome, icon: ArrowUpRight, gradient: "gradient-income", prefix: "+₹" },
     { title: "Expenses", value: totalExpenses, icon: ArrowDownRight, gradient: "gradient-expense", prefix: "-₹" },
   ];
 
@@ -111,7 +111,7 @@ const Dashboard = () => {
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip formatter={(val: number) => `₹${val}`} />
                 <Legend />
-                <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} name="Pocket Money" />
                 <Bar dataKey="expenses" fill="hsl(0,72%,55%)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
