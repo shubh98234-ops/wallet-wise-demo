@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const statCards = [
     { title: "Balance", value: balance, icon: Wallet, gradient: "gradient-balance", prefix: "₹" },
-    { title: "Income", value: totalIncome, icon: ArrowUpRight, gradient: "gradient-income", prefix: "+₹" },
+    { title: "Pocket Money", value: totalIncome, icon: ArrowUpRight, gradient: "gradient-income", prefix: "+₹" },
     { title: "Expenses", value: totalExpenses, icon: ArrowDownRight, gradient: "gradient-expense", prefix: "-₹" },
   ];
 
