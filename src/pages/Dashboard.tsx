@@ -111,7 +111,7 @@ const Dashboard = () => {
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip formatter={(val: number) => `₹${val}`} />
                 <Legend />
-                <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} name="Pocket Money" />
                 <Bar dataKey="expenses" fill="hsl(0,72%,55%)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
