@@ -26,7 +26,7 @@ const SettingsPage = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Spent: ${currentMonthExpenses.toLocaleString()}</span>
+              <span className="text-muted-foreground">Spent: ₹{currentMonthExpenses.toLocaleString()}</span>
               <span className="font-medium">{Math.round(budgetPercentage)}%</span>
             </div>
             <Progress value={Math.min(budgetPercentage, 100)} className="h-3" />

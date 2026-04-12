@@ -41,7 +41,7 @@ const Analytics = () => {
                     <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" paddingAngle={3}>
                       {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                     </Pie>
-                    <Tooltip formatter={(val: number) => `$${val}`} />
+                    <Tooltip formatter={(val: number) => `₹${val}`} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="space-y-2 mt-4">
@@ -53,7 +53,7 @@ const Analytics = () => {
                       </div>
                       <div className="flex gap-3">
                         <span className="text-muted-foreground">{((d.value / totalExpenses) * 100).toFixed(1)}%</span>
-                        <span className="font-medium">${d.value}</span>
+                        <span className="font-medium">₹{d.value}</span>
                       </div>
                     </div>
                   ))}
@@ -73,7 +73,7 @@ const Analytics = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(214,20%,90%)" />
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip formatter={(val: number) => `$${val}`} />
+                <Tooltip formatter={(val: number) => `₹${val}`} />
                 <Legend />
                 <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} name="Income" />
                 <Bar dataKey="expenses" fill="hsl(0,72%,55%)" radius={[4, 4, 0, 0]} name="Expenses" />
