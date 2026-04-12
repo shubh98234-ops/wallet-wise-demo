@@ -8,7 +8,7 @@ import { PlusCircle } from "lucide-react";
 
 const AddIncome = () => {
   const { addTransaction, categories } = useBudget();
-  const incomeCategories = categories.filter((c) => ["Pocket Money", "Freelance", "Allowance"].includes(c.name));
+  const incomeCategories = categories.filter((c) => ["Pocket Money", "Freelance", "Allowance", "Part-time Job"].includes(c.name));
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");

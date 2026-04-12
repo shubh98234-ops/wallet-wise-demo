@@ -43,7 +43,7 @@ export const dummyTransactions: Transaction[] = [
   { id: "11", type: "expense", amount: 40, category: "Health", description: "Pharmacy", date: "2026-04-10" },
   { id: "12", type: "expense", amount: 200, category: "Travel", description: "Weekend trip", date: "2026-04-11" },
   { id: "13", type: "expense", amount: 35, category: "Food", description: "Coffee & snacks", date: "2026-04-12" },
-  { id: "14", type: "income", amount: 1500, category: "Salary", description: "Part-time job", date: "2026-03-01" },
+  { id: "14", type: "income", amount: 1500, category: "Pocket Money", description: "Monthly pocket money", date: "2026-03-01" },
   { id: "15", type: "income", amount: 500, category: "Allowance", description: "Monthly allowance", date: "2026-03-01" },
   { id: "16", type: "expense", amount: 320, category: "Food", description: "Monthly groceries", date: "2026-03-05" },
   { id: "17", type: "expense", amount: 90, category: "Entertainment", description: "Concert tickets", date: "2026-03-10" },

@@ -66,7 +66,7 @@ const Analytics = () => {
         </Card>
 
         <Card>
-          <CardHeader><CardTitle className="text-base">Monthly Income vs Expenses</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">Monthly Pocket Money vs Expenses</CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={monthlyData}>
@@ -75,7 +75,7 @@ const Analytics = () => {
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip formatter={(val: number) => `₹${val}`} />
                 <Legend />
-                <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} name="Income" />
+                <Bar dataKey="income" fill="hsl(152,60%,40%)" radius={[4, 4, 0, 0]} name="Pocket Money" />
                 <Bar dataKey="expenses" fill="hsl(0,72%,55%)" radius={[4, 4, 0, 0]} name="Expenses" />
               </BarChart>
             </ResponsiveContainer>
