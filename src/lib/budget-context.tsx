@@ -8,6 +8,9 @@ type BudgetContextType = {
   monthlyBudget: number;
   isLoggedIn: boolean;
   userName: string;
+  offlineDemoMode: boolean;
+  setOfflineDemoMode: (v: boolean) => void;
+  resetDemoData: () => void;
   addTransaction: (t: Omit<Transaction, "id">) => void;
   deleteTransaction: (id: string) => void;
   setMonthlyBudget: (b: number) => void;
