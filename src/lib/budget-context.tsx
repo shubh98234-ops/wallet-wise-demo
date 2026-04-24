@@ -131,6 +131,7 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     <BudgetContext.Provider
       value={{
         transactions, categories, monthlyBudget, isLoggedIn, userName,
+        offlineDemoMode, setOfflineDemoMode, resetDemoData,
         addTransaction, deleteTransaction, setMonthlyBudget, addCategory,
         login, register, logout,
         totalIncome, totalExpenses, balance, currentMonthExpenses, budgetPercentage,
