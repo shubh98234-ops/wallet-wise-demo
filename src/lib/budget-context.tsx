@@ -105,7 +105,9 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (email) {
       setIsLoggedIn(true);
       setUserName(email.split("@")[0]);
-      toast.success("Welcome back!");
+      setTransactions([]);
+      setMonthlyBudgetState(0);
+      toast.success("Welcome! Start fresh 🎉");
       return true;
     }
     return false;
@@ -115,7 +117,9 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (name && email) {
       setIsLoggedIn(true);
       setUserName(name);
-      toast.success("Account created!");
+      setTransactions([]);
+      setMonthlyBudgetState(0);
+      toast.success("Account created! Start fresh 🎉");
       return true;
     }
     return false;
