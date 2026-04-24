@@ -39,6 +39,24 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [monthlyBudget, setMonthlyBudgetState] = useState(1200);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [offlineDemoMode, setOfflineDemoModeState] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    const stored = localStorage.getItem("offlineDemoMode");
+    return stored === null ? true : stored === "true";
+  });
+
+  const setOfflineDemoMode = useCallback((v: boolean) => {
+    setOfflineDemoModeState(v);
+    try { localStorage.setItem("offlineDemoMode", String(v)); } catch {}
+    toast.success(v ? "Offline demo mode enabled" : "Offline demo mode disabled");
+  }, []);
+
+  const resetDemoData = useCallback(() => {
+    setTransactions(dummyTransactions);
+    setCategories(defaultCategories);
+    setMonthlyBudgetState(1200);
+    toast.success("Demo data reset");
+  }, []);
 
   const now = new Date();
   const currentMonth = now.getMonth();
