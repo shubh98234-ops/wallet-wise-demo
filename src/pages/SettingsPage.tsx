@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { useBudget } from "@/lib/budget-context";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { WifiOff, RotateCcw } from "lucide-react";
 
 const SettingsPage = () => {
-  const { monthlyBudget, setMonthlyBudget, categories, addCategory, budgetPercentage, currentMonthExpenses } = useBudget();
+  const {
+    monthlyBudget, setMonthlyBudget, categories, addCategory,
+    budgetPercentage, currentMonthExpenses,
+    offlineDemoMode, setOfflineDemoMode, resetDemoData,
+  } = useBudget();
   const [budgetInput, setBudgetInput] = useState(monthlyBudget.toString());
   const [newCatName, setNewCatName] = useState("");
   const [newCatIcon, setNewCatIcon] = useState("📌");
@@ -16,6 +23,33 @@ const SettingsPage = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold">Settings</h1>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <WifiOff className="h-4 w-4" /> Offline Demo Mode
+          </CardTitle>
+          <CardDescription>
+            Use local dummy data instead of the cloud backend. Perfect for presentations — works without internet.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="offline-mode" className="cursor-pointer">
+              {offlineDemoMode ? "Enabled — using local dummy data" : "Disabled — cloud mode"}
+            </Label>
+            <Switch
+              id="offline-mode"
+              checked={offlineDemoMode}
+              onCheckedChange={setOfflineDemoMode}
+            />
+          </div>
+          <Separator />
+          <Button variant="outline" size="sm" onClick={resetDemoData} className="gap-2">
+            <RotateCcw className="h-4 w-4" /> Reset demo data
+          </Button>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader><CardTitle className="text-base">Monthly Budget</CardTitle></CardHeader>

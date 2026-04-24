@@ -8,6 +8,9 @@ type BudgetContextType = {
   monthlyBudget: number;
   isLoggedIn: boolean;
   userName: string;
+  offlineDemoMode: boolean;
+  setOfflineDemoMode: (v: boolean) => void;
+  resetDemoData: () => void;
   addTransaction: (t: Omit<Transaction, "id">) => void;
   deleteTransaction: (id: string) => void;
   setMonthlyBudget: (b: number) => void;
@@ -36,6 +39,24 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [monthlyBudget, setMonthlyBudgetState] = useState(1200);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [offlineDemoMode, setOfflineDemoModeState] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    const stored = localStorage.getItem("offlineDemoMode");
+    return stored === null ? true : stored === "true";
+  });
+
+  const setOfflineDemoMode = useCallback((v: boolean) => {
+    setOfflineDemoModeState(v);
+    try { localStorage.setItem("offlineDemoMode", String(v)); } catch {}
+    toast.success(v ? "Offline demo mode enabled" : "Offline demo mode disabled");
+  }, []);
+
+  const resetDemoData = useCallback(() => {
+    setTransactions(dummyTransactions);
+    setCategories(defaultCategories);
+    setMonthlyBudgetState(1200);
+    toast.success("Demo data reset");
+  }, []);
 
   const now = new Date();
   const currentMonth = now.getMonth();
@@ -110,6 +131,7 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     <BudgetContext.Provider
       value={{
         transactions, categories, monthlyBudget, isLoggedIn, userName,
+        offlineDemoMode, setOfflineDemoMode, resetDemoData,
         addTransaction, deleteTransaction, setMonthlyBudget, addCategory,
         login, register, logout,
         totalIncome, totalExpenses, balance, currentMonthExpenses, budgetPercentage,
