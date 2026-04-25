@@ -39,6 +39,21 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [monthlyBudget, setMonthlyBudgetState] = useState(1200);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
+
+  const userKey = (email: string) => `userData:${email.toLowerCase()}`;
+  const registeredKey = (email: string) => `registered:${email.toLowerCase()}`;
+
+  // Persist current user's data whenever it changes
+  useEffect(() => {
+    if (!currentEmail) return;
+    try {
+      localStorage.setItem(
+        userKey(currentEmail),
+        JSON.stringify({ transactions, categories, monthlyBudget, userName })
+      );
+    } catch {}
+  }, [transactions, categories, monthlyBudget, userName, currentEmail]);
   const [offlineDemoMode, setOfflineDemoModeState] = useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     const stored = localStorage.getItem("offlineDemoMode");
@@ -102,32 +117,54 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, []);
 
   const login = useCallback((email: string, _password: string) => {
-    if (email) {
-      setIsLoggedIn(true);
-      setUserName(email.split("@")[0]);
-      setTransactions([]);
-      setMonthlyBudgetState(0);
-      toast.success("Welcome! Start fresh 🎉");
-      return true;
+    if (!email) return false;
+    const key = userKey(email);
+    const isRegistered = localStorage.getItem(registeredKey(email)) === "true";
+    const saved = localStorage.getItem(key);
+
+    if (isRegistered && saved) {
+      try {
+        const data = JSON.parse(saved);
+        setTransactions(data.transactions ?? []);
+        setCategories(data.categories ?? defaultCategories);
+        setMonthlyBudgetState(data.monthlyBudget ?? 0);
+        setUserName(data.userName ?? email.split("@")[0]);
+        setIsLoggedIn(true);
+        setCurrentEmail(email);
+        toast.success(`Welcome back, ${data.userName ?? email.split("@")[0]}! 👋`);
+        return true;
+      } catch {}
     }
-    return false;
+
+    // New login (not previously registered) — start fresh
+    setIsLoggedIn(true);
+    setUserName(email.split("@")[0]);
+    setTransactions([]);
+    setCategories(defaultCategories);
+    setMonthlyBudgetState(0);
+    setCurrentEmail(email);
+    localStorage.setItem(registeredKey(email), "true");
+    toast.success("Welcome! Start fresh 🎉");
+    return true;
   }, []);
 
   const register = useCallback((name: string, email: string, _password: string) => {
-    if (name && email) {
-      setIsLoggedIn(true);
-      setUserName(name);
-      setTransactions([]);
-      setMonthlyBudgetState(0);
-      toast.success("Account created! Start fresh 🎉");
-      return true;
-    }
-    return false;
+    if (!name || !email) return false;
+    setIsLoggedIn(true);
+    setUserName(name);
+    setTransactions([]);
+    setCategories(defaultCategories);
+    setMonthlyBudgetState(0);
+    setCurrentEmail(email);
+    localStorage.setItem(registeredKey(email), "true");
+    toast.success("Account created! Start fresh 🎉");
+    return true;
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserName("");
+    setCurrentEmail(null);
     toast.info("Logged out");
   }, []);
 
