@@ -1,4 +1,4 @@
-import { LayoutDashboard, PlusCircle, MinusCircle, List, PieChart, Settings, LogOut, GraduationCap } from "lucide-react";
+import { LayoutDashboard, PlusCircle, MinusCircle, List, PieChart, Settings, LogOut, GraduationCap, Database } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useBudget } from "@/lib/budget-context";
 import {
@@ -14,6 +14,7 @@ const navItems = [
   { title: "Transactions", url: "/transactions", icon: List },
   { title: "Analytics", url: "/analytics", icon: PieChart },
   { title: "Settings", url: "/settings", icon: Settings },
+  { title: "Storage Viewer", url: "/storage", icon: Database },
 ];
 
 export function AppSidebar() {

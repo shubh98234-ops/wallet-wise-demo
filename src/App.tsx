@@ -12,6 +12,7 @@ import AddExpense from "@/pages/AddExpense";
 import Transactions from "@/pages/Transactions";
 import Analytics from "@/pages/Analytics";
 import SettingsPage from "@/pages/SettingsPage";
+import StorageViewer from "@/pages/StorageViewer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const AppRoutes = () => {
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/storage" element={<StorageViewer />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
