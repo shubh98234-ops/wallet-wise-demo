@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ArrowUpRight, ArrowDownRight, Wallet, TrendingUp } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
-import { monthlyData, defaultCategories } from "@/lib/data";
+import { defaultCategories } from "@/lib/data";
 
 const Dashboard = () => {
   const { totalIncome, totalExpenses, balance, budgetPercentage, monthlyBudget, transactions, currentMonthExpenses } = useBudget();
@@ -27,6 +27,30 @@ const Dashboard = () => {
   const recentTx = [...transactions]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
+
+  // Build last 6 months of income/expense data from THIS user's transactions only
+  const monthlyData = (() => {
+    const months: { month: string; income: number; expenses: number; key: string }[] = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(currentYear, currentMonth - i, 1);
+      months.push({
+        month: d.toLocaleString("default", { month: "short" }),
+        income: 0,
+        expenses: 0,
+        key: `${d.getFullYear()}-${d.getMonth()}`,
+      });
+    }
+    transactions.forEach((t) => {
+      const td = new Date(t.date);
+      const key = `${td.getFullYear()}-${td.getMonth()}`;
+      const bucket = months.find((m) => m.key === key);
+      if (bucket) {
+        if (t.type === "income") bucket.income += t.amount;
+        else bucket.expenses += t.amount;
+      }
+    });
+    return months;
+  })();
 
   const budgetColor = budgetPercentage >= 100 ? "bg-destructive" : budgetPercentage >= 80 ? "bg-warning" : "bg-primary";
 
