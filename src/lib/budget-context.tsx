@@ -117,32 +117,54 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, []);
 
   const login = useCallback((email: string, _password: string) => {
-    if (email) {
-      setIsLoggedIn(true);
-      setUserName(email.split("@")[0]);
-      setTransactions([]);
-      setMonthlyBudgetState(0);
-      toast.success("Welcome! Start fresh 🎉");
-      return true;
+    if (!email) return false;
+    const key = userKey(email);
+    const isRegistered = localStorage.getItem(registeredKey(email)) === "true";
+    const saved = localStorage.getItem(key);
+
+    if (isRegistered && saved) {
+      try {
+        const data = JSON.parse(saved);
+        setTransactions(data.transactions ?? []);
+        setCategories(data.categories ?? defaultCategories);
+        setMonthlyBudgetState(data.monthlyBudget ?? 0);
+        setUserName(data.userName ?? email.split("@")[0]);
+        setIsLoggedIn(true);
+        setCurrentEmail(email);
+        toast.success(`Welcome back, ${data.userName ?? email.split("@")[0]}! 👋`);
+        return true;
+      } catch {}
     }
-    return false;
+
+    // New login (not previously registered) — start fresh
+    setIsLoggedIn(true);
+    setUserName(email.split("@")[0]);
+    setTransactions([]);
+    setCategories(defaultCategories);
+    setMonthlyBudgetState(0);
+    setCurrentEmail(email);
+    localStorage.setItem(registeredKey(email), "true");
+    toast.success("Welcome! Start fresh 🎉");
+    return true;
   }, []);
 
   const register = useCallback((name: string, email: string, _password: string) => {
-    if (name && email) {
-      setIsLoggedIn(true);
-      setUserName(name);
-      setTransactions([]);
-      setMonthlyBudgetState(0);
-      toast.success("Account created! Start fresh 🎉");
-      return true;
-    }
-    return false;
+    if (!name || !email) return false;
+    setIsLoggedIn(true);
+    setUserName(name);
+    setTransactions([]);
+    setCategories(defaultCategories);
+    setMonthlyBudgetState(0);
+    setCurrentEmail(email);
+    localStorage.setItem(registeredKey(email), "true");
+    toast.success("Account created! Start fresh 🎉");
+    return true;
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserName("");
+    setCurrentEmail(null);
     toast.info("Logged out");
   }, []);
 
