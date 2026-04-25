@@ -43,6 +43,17 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const userKey = (email: string) => `userData:${email.toLowerCase()}`;
   const registeredKey = (email: string) => `registered:${email.toLowerCase()}`;
+  const passwordKey = (email: string) => `password:${email.toLowerCase()}`;
+
+  // Simple hash so we don't store raw passwords in localStorage
+  const hashPassword = (password: string) => {
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+      hash = (hash << 5) - hash + password.charCodeAt(i);
+      hash |= 0;
+    }
+    return `h_${hash}_${password.length}`;
+  };
 
   // Persist current user's data whenever it changes
   useEffect(() => {
