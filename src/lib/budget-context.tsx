@@ -39,6 +39,21 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [monthlyBudget, setMonthlyBudgetState] = useState(1200);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
+
+  const userKey = (email: string) => `userData:${email.toLowerCase()}`;
+  const registeredKey = (email: string) => `registered:${email.toLowerCase()}`;
+
+  // Persist current user's data whenever it changes
+  useEffect(() => {
+    if (!currentEmail) return;
+    try {
+      localStorage.setItem(
+        userKey(currentEmail),
+        JSON.stringify({ transactions, categories, monthlyBudget, userName })
+      );
+    } catch {}
+  }, [transactions, categories, monthlyBudget, userName, currentEmail]);
   const [offlineDemoMode, setOfflineDemoModeState] = useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     const stored = localStorage.getItem("offlineDemoMode");
