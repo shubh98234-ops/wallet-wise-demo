@@ -43,6 +43,17 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const userKey = (email: string) => `userData:${email.toLowerCase()}`;
   const registeredKey = (email: string) => `registered:${email.toLowerCase()}`;
+  const passwordKey = (email: string) => `password:${email.toLowerCase()}`;
+
+  // Simple hash so we don't store raw passwords in localStorage
+  const hashPassword = (password: string) => {
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+      hash = (hash << 5) - hash + password.charCodeAt(i);
+      hash |= 0;
+    }
+    return `h_${hash}_${password.length}`;
+  };
 
   // Persist current user's data whenever it changes
   useEffect(() => {
@@ -116,13 +127,32 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     toast.success("Category added!");
   }, []);
 
-  const login = useCallback((email: string, _password: string) => {
-    if (!email) return false;
-    const key = userKey(email);
+  const login = useCallback((email: string, password: string) => {
+    if (!email || !password) {
+      toast.error("Please enter email and password");
+      return false;
+    }
+
     const isRegistered = localStorage.getItem(registeredKey(email)) === "true";
+    const storedPasswordHash = localStorage.getItem(passwordKey(email));
+
+    // Demo account fallback (pre-filled credentials)
+    const isDemoAccount = email.toLowerCase() === "student@demo.com" && password === "demo123";
+
+    if (!isRegistered && !isDemoAccount) {
+      toast.error("No account found with this email. Please register first.");
+      return false;
+    }
+
+    if (isRegistered && storedPasswordHash && storedPasswordHash !== hashPassword(password)) {
+      toast.error("Incorrect password. Please try again.");
+      return false;
+    }
+
+    const key = userKey(email);
     const saved = localStorage.getItem(key);
 
-    if (isRegistered && saved) {
+    if (saved) {
       try {
         const data = JSON.parse(saved);
         setTransactions(data.transactions ?? []);
@@ -136,20 +166,33 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       } catch {}
     }
 
-    // New login (not previously registered) — start fresh
+    // Demo account or first-time login with no saved data
     setIsLoggedIn(true);
     setUserName(email.split("@")[0]);
     setTransactions([]);
     setCategories(defaultCategories);
     setMonthlyBudgetState(0);
     setCurrentEmail(email);
-    localStorage.setItem(registeredKey(email), "true");
-    toast.success("Welcome! Start fresh 🎉");
+    if (!isRegistered) {
+      localStorage.setItem(registeredKey(email), "true");
+      localStorage.setItem(passwordKey(email), hashPassword(password));
+    }
+    toast.success("Welcome! 🎉");
     return true;
   }, []);
 
-  const register = useCallback((name: string, email: string, _password: string) => {
-    if (!name || !email) return false;
+  const register = useCallback((name: string, email: string, password: string) => {
+    if (!name || !email || !password) {
+      toast.error("Please fill in all fields");
+      return false;
+    }
+
+    const isAlreadyRegistered = localStorage.getItem(registeredKey(email)) === "true";
+    if (isAlreadyRegistered) {
+      toast.error("This email is already registered. Please log in instead.");
+      return false;
+    }
+
     setIsLoggedIn(true);
     setUserName(name);
     setTransactions([]);
@@ -157,6 +200,7 @@ export const BudgetProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setMonthlyBudgetState(0);
     setCurrentEmail(email);
     localStorage.setItem(registeredKey(email), "true");
+    localStorage.setItem(passwordKey(email), hashPassword(password));
     toast.success("Account created! Start fresh 🎉");
     return true;
   }, []);
